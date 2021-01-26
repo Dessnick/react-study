@@ -1,5 +1,5 @@
 {
-  "name": "react-template",
+  "name": "1-fetch-users",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
