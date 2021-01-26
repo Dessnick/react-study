@@ -33,7 +33,7 @@ function App() {
 
     if (action === 'editText') {
       const newText = window.prompt('Введите текст', text);
-      if (!newText) {
+      if (!newText.trim()) {
         return;
       }
       text = newText;
