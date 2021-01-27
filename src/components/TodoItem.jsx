@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from './button/Button';
+import Button from './Button';
 
 function TodoItem({ id, text, color, onEdit, onRemove, onChangeStatus }) {
   return (

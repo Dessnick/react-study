@@ -4,17 +4,14 @@ import TodoItem from './components/TodoItem';
 const colors = ['grey', 'red', 'blue', 'orange', 'green'];
 
 function App() {
-  const [tasks, setTasks] = React.useState([]);
+  const [tasks, setTasks] = React.useState(JSON.parse(localStorage.getItem('tasks')) || []);
   const [inputValue, setInputValue] = React.useState('');
-  const [activeColor, setActiveColor] = React.useState('grey');
+  const [activeColor, setActiveColor] = React.useState('');
 
   React.useEffect(() => {
-    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    setTasks(tasks);
-  }, []);
-
-  React.useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    if (tasks.length) {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
   }, [tasks]);
 
   const onAddTask = (text) => {
@@ -26,26 +23,33 @@ function App() {
     setTasks((prevTasks) => [...prevTasks, newTask]);
   };
 
-  const onEditTask = (id, action) => {
-    const taskToEdit = tasks.filter((item) => item.id === id)[0];
-    let text = taskToEdit.text;
-    let completed = taskToEdit.completed;
-
-    if (action === 'editText') {
-      const newText = window.prompt('Введите текст', text);
-      if (!newText.trim()) {
-        return;
-      }
-      text = newText;
-    }
-    if (action === 'changeStatus') {
-      completed = !completed;
+  const onEditTask = (id) => {
+    const taskToEdit = tasks.find((task) => task.id === id);
+    const prevText = taskToEdit.text;
+    const newText = window.prompt('Введите текст', prevText);
+    if (!newText.trim()) {
+      return;
     }
 
     setTasks(
       tasks.map((task) => {
         if (task.id === id) {
-          return { ...task, text, completed };
+          return { ...task, text: newText };
+        }
+        return task;
+      }),
+    );
+  };
+
+  const onChangeStatus = (id) => {
+    const taskToEdit = tasks.find((task) => task.id === id);
+    let completed = taskToEdit.completed;
+    completed = !completed;
+
+    setTasks(
+      tasks.map((task) => {
+        if (task.id === id) {
+          return { ...task, completed };
         }
         return task;
       }),
@@ -76,8 +80,8 @@ function App() {
               id={obj.id}
               text={obj.text}
               color={obj.color}
-              onChangeStatus={() => onEditTask(obj.id, 'changeStatus')}
-              onEdit={() => onEditTask(obj.id, 'editText')}
+              onChangeStatus={() => onChangeStatus(obj.id)}
+              onEdit={() => onEditTask(obj.id)}
               onRemove={() => onRemoveTask(obj.id)}
             />
           ))
@@ -97,7 +101,7 @@ function App() {
             {colors.map((color) => (
               <li
                 key={color}
-                className={`todo-color ${color} ${color === activeColor && 'active'}`}
+                className={`todo-color ${color} ${color === activeColor ? 'active' : ''}`}
                 onClick={() => setActiveColor(color)}></li>
             ))}
           </ul>
