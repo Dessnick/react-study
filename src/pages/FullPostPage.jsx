@@ -5,43 +5,56 @@ import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
+import { StateContext } from '../App';
+
 function FullPostPage({ match }) {
-  const [post, setPost] = React.useState();
-  const [comments, setComments] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
+  const [state, dispatch] = React.useContext(StateContext);
 
   React.useEffect(() => {
+    dispatch({
+      type: 'SET_LOADED',
+      payload: false,
+    });
     axios
-      .get(`https://5c3755177820ff0014d92711.mockapi.io/posts/${match.params.id}`)
+      .get(`https://5c3755177820ff0014d92711.mockapi.io/articles/${match.params.id}`)
       .then(({ data }) => {
-        setPost(data);
-        setLoading(false);
+        dispatch({
+          type: 'LOAD_ARTICLE',
+          payload: data,
+        });
       });
   }, []);
 
   React.useEffect(() => {
+    dispatch({
+      type: 'SET_LOADED',
+      payload: false,
+    });
     axios
-      .get(`https://5c3755177820ff0014d92711.mockapi.io/posts/${match.params.id}/comments`)
+      .get(`https://5c3755177820ff0014d92711.mockapi.io/articles/${match.params.id}/comments`)
       .then(({ data }) => {
-        setComments(data);
+        dispatch({
+          type: 'SET_COMMENTS',
+          payload: data,
+        });
       });
   }, []);
 
   return (
     <div>
-      <Button>
+      <Button variant="primary">
         <Link to="/">Back</Link>
       </Button>
-      {!loading ? (
+      {state.isLoaded ? (
         <React.Fragment>
           <Card className="mt-4">
-            <Card.Img variant="top" src={post.image} />
+            <Card.Img variant="top" src={state.currentPost.image} />
             <Card.Body>
-              <Card.Title>{post.title}</Card.Title>
-              <Card.Text>{post.text}</Card.Text>
+              <Card.Title>{state.currentPost.title}</Card.Title>
+              <Card.Text>{state.currentPost.text}</Card.Text>
             </Card.Body>
             <Card.Footer>
-              <small className="text-muted">Created at: {post.createdAt}</small>
+              <small className="text-muted">Created at: {state.currentPost.createdAt}</small>
             </Card.Footer>
           </Card>
           <br />
@@ -50,8 +63,8 @@ function FullPostPage({ match }) {
         <h1>Loading...</h1>
       )}
       <h3 className="mb-3 mt-4">Comments</h3>
-      {!loading ? (
-        comments.map((obj) => (
+      {state.isLoaded ? (
+        state.comments.map((obj) => (
           <React.Fragment>
             <Card className="mb-4">
               <Card.Body>

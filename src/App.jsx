@@ -1,30 +1,28 @@
 import React from 'react';
-import axios from 'axios';
 import { Route } from 'react-router-dom';
 
 import Container from 'react-bootstrap/Container';
 import { HomePage, AboutPage, FullPostPage } from './pages';
 import Navigation from './components/Navigation';
+import { initialState, reducer } from './reducer';
+
+export const StateContext = React.createContext();
 
 function App() {
-  const [news, setNews] = React.useState([]);
-
-  React.useEffect(() => {
-    axios.get('https://5c3755177820ff0014d92711.mockapi.io/posts').then(({ data }) => {
-      setNews((news) => [...news, ...data]);
-    });
-  }, []);
+  const [state, dispatch] = React.useReducer(reducer, initialState);
 
   return (
     <Container>
-      <Navigation updateData={() => setNews([])} />
-      <Route exact path="/">
-        <HomePage news={news} />
-      </Route>
-      <Route exact path="/post/:id" component={FullPostPage}></Route>
-      <Route exact path="/about">
-        <AboutPage />
-      </Route>
+      <StateContext.Provider value={[state, dispatch]}>
+        <Navigation />
+        <Route exact path="/">
+          <HomePage />
+        </Route>
+        <Route exact path="/articles/:id" component={FullPostPage}></Route>
+        <Route exact path="/about">
+          <AboutPage />
+        </Route>
+      </StateContext.Provider>
     </Container>
   );
 }

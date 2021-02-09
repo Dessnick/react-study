@@ -3,7 +3,6 @@ import axios from 'axios';
 
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
-import { HomePage } from '../pages';
 
 class Search extends Component {
   state = {
@@ -46,7 +45,6 @@ class Search extends Component {
             onChange={(event) => this.onChangeHandler(event)}
           />
         </Form>
-        {console.log(this.state.searchResult)}
         {/* {this.renderNews} */}
       </div>
     );

@@ -1,29 +1,77 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
 
+import Container from 'react-bootstrap/Container';
 import CardColumns from 'react-bootstrap/CardColumns';
-import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 
-function HomePage({ news }) {
+import AddEditArticleModal from '../components/AddEditArticleModal';
+import Article from '../components/Article';
+
+import { StateContext } from '../App';
+
+function HomePage() {
+  const [state, dispatch] = React.useContext(StateContext);
+
+  React.useEffect(() => {
+    dispatch({
+      type: 'SET_LOADED',
+      payload: false,
+    });
+    axios.get('https://5c3755177820ff0014d92711.mockapi.io/articles').then(({ data }) => {
+      dispatch({
+        type: 'SET_ARTICLES',
+        payload: data,
+      });
+    });
+  }, []);
+
+  const openModal = (data) => {
+    dispatch({
+      type: 'OPEN_MODAL',
+      payload: data,
+    });
+  };
+
+  const onRemoveArticle = (id) => {
+    if (window.confirm('Are you want DELETE this post?')) {
+      axios.delete(`https://5c3755177820ff0014d92711.mockapi.io/articles/${id}`).then(() => {
+        dispatch({
+          type: 'REMOVE_ARTICLE',
+          payload: id,
+        });
+      });
+    }
+  };
+
+  console.log(state);
+
   return (
-    <div>
+    <Container>
+      <Button onClick={() => openModal({})}>Add article</Button>
+      <AddEditArticleModal openModal={state.visibleModal} />
       <CardColumns className="mt-4">
-        {news.map((obj) => (
-          <Card key={obj.id}>
-            <Card.Img variant="top" src={obj.image} />
-            <Card.Body>
-              <Card.Title>
-                <Link to={`post/${obj.id}`}>{obj.title}</Link>
-              </Card.Title>
-              <Card.Text>{obj.text}</Card.Text>
-            </Card.Body>
-            <Card.Footer>
-              <small className="text-muted">Created at: {obj.createdAt}</small>
-            </Card.Footer>
-          </Card>
-        ))}
+        {state.isLoaded ? (
+          state.articles
+            .slice(0)
+            .reverse()
+            .map((obj) => (
+              <Article
+                key={obj.id}
+                id={obj.id}
+                title={obj.title}
+                image={obj.image}
+                text={obj.text}
+                createdAt={obj.createdAt}
+                onEdit={() => openModal(obj)}
+                onRemove={onRemoveArticle}
+              />
+            ))
+        ) : (
+          <h1>'Loading...'</h1>
+        )}
       </CardColumns>
-    </div>
+    </Container>
   );
 }
 
