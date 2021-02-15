@@ -5,7 +5,7 @@ import Container from "react-bootstrap/Container";
 import CardColumns from "react-bootstrap/CardColumns";
 import Button from "react-bootstrap/Button";
 
-import AddEditArticleModal from "../components/AddEditArticleModal";
+import ArticleModal from "../components/ArticleModal";
 import Article from "../components/Article";
 
 import { StateContext } from "../App";
@@ -53,7 +53,7 @@ function HomePage() {
       <Button onClick={() => openModal({ title: "", image: "", text: "" })}>
         Add article
       </Button>
-      <AddEditArticleModal openModal={state.visibleModal} />
+      <ArticleModal openModal={state.visibleModal} />
       <CardColumns className="mt-4">
         {state.isLoaded ? (
           state.articles
