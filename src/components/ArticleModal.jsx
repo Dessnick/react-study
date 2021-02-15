@@ -7,18 +7,14 @@ import Form from "react-bootstrap/Form";
 
 import { StateContext } from "../App";
 
-function AddEditArticleModal({ openModal }) {
+function ArticleModal({ openModal }) {
   const [state, dispatch] = React.useContext(StateContext);
-  // const initialState = state.currentPost
-  //   ? {
-  //       title: state.currentPost.title,
-  //       image: state.currentPost.image,
-  //       text: state.currentPost.text
-  //     }
-  //   : { title: "", image: "", text: "" };
-  // const [data, setData] = React.useState(initialState);
   const [data, setData] = React.useState(state.currentPost);
   const [postUploading, setPostUploading] = React.useState(false);
+
+  React.useEffect(() => {
+    setData(state.currentPost);
+  }, [state.currentPost]);
 
   const closeModal = () => {
     dispatch({
@@ -117,4 +113,4 @@ function AddEditArticleModal({ openModal }) {
   );
 }
 
-export default AddEditArticleModal;
+export default ArticleModal;
