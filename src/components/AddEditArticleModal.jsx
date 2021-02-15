@@ -1,31 +1,41 @@
-import React from 'react';
-import axios from 'axios';
+import React from "react";
+import axios from "axios";
 
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
 
-import { StateContext } from '../App';
+import { StateContext } from "../App";
 
 function AddEditArticleModal({ openModal }) {
   const [state, dispatch] = React.useContext(StateContext);
+  // const initialState = state.currentPost
+  //   ? {
+  //       title: state.currentPost.title,
+  //       image: state.currentPost.image,
+  //       text: state.currentPost.text
+  //     }
+  //   : { title: "", image: "", text: "" };
+  // const [data, setData] = React.useState(initialState);
   const [data, setData] = React.useState(state.currentPost);
   const [postUploading, setPostUploading] = React.useState(false);
 
   const closeModal = () => {
     dispatch({
-      type: 'CLOSE_MODAL',
+      type: "CLOSE_MODAL"
     });
   };
 
   const onAddArticle = (data) => {
     if (data) {
-      axios.post(`https://5c3755177820ff0014d92711.mockapi.io/articles`, data).then(({ data }) => {
-        dispatch({
-          type: 'ADD_ARTICLE',
-          payload: data,
+      axios
+        .post(`https://5c3755177820ff0014d92711.mockapi.io/articles`, data)
+        .then(({ data }) => {
+          dispatch({
+            type: "ADD_ARTICLE",
+            payload: data
+          });
         });
-      });
     }
   };
 
@@ -33,7 +43,7 @@ function AddEditArticleModal({ openModal }) {
     const { name, value } = event.target;
     setData({
       ...data,
-      [name]: value,
+      [name]: value
     });
   };
 
@@ -42,15 +52,20 @@ function AddEditArticleModal({ openModal }) {
       setPostUploading(true);
       onAddArticle(data);
     }
-    // setData({
-    //   title: '',
-    //   image: '',
-    //   text: '',
-    // });
+    setData({
+      title: "",
+      image: "",
+      text: ""
+    });
   };
 
   return (
-    <Modal show={openModal} onHide={closeModal} backdrop="static" keyboard={false}>
+    <Modal
+      show={openModal}
+      onHide={closeModal}
+      backdrop="static"
+      keyboard={false}
+    >
       <Modal.Header closeButton>
         <Modal.Title>Adding article</Modal.Title>
       </Modal.Header>
@@ -87,7 +102,7 @@ function AddEditArticleModal({ openModal }) {
             </Form.Group>
           </Form>
         ) : (
-          'Uploading...'
+          "Uploading..."
         )}
       </Modal.Body>
       <Modal.Footer>
