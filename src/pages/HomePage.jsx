@@ -43,7 +43,7 @@ function HomePage() {
       });
     }
   };
-  console.log(state.articles, 'homepage');
+  console.log(state.articles);
   return (
     <Container>
       <Button onClick={() => openModal({ title: '', image: '', text: '' })}>Add article</Button>

@@ -20,12 +20,14 @@ class Search extends Component {
       `https://5c3755177820ff0014d92711.mockapi.io/articles?title=${val}`,
     );
     this.setState({ searchResult: data, loading: false });
+    if (this.state.searchResult) {
+      this.props.onSearchChange(this.state.searchResult);
+    }
   };
 
   onChangeHandler = async (e) => {
     this.search(e.target.value);
     this.setState({ value: e.target.value });
-    this.props.onSearchChange(this.state.searchResult);
   };
 
   render() {

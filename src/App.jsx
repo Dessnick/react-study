@@ -12,7 +12,6 @@ function App() {
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
   const handleSearchChange = (data) => {
-    console.log(data, 'App');
     dispatch({
       type: 'SET_ARTICLES',
       payload: data,
