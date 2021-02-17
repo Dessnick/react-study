@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Search from './Search';
 
-function Navigation({ searchResult }) {
+function Navigation({ onSearchChange }) {
   return (
     <div className="App">
       <Navbar bg="light" expand="lg">
@@ -22,7 +22,7 @@ function Navigation({ searchResult }) {
               About
             </Link>
           </Nav>
-          <Search searchResult={searchResult} />
+          <Search onSearchChange={onSearchChange} />
         </Navbar.Collapse>
       </Navbar>
     </div>

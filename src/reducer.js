@@ -3,69 +3,63 @@ export const initialState = {
   visibleModal: false,
   comments: [],
   isLoaded: false,
-  currentPost: { title: "", image: "", text: "" }
+  currentPost: { title: '', image: '', text: '' },
 };
 
 export function reducer(state, action) {
   switch (action.type) {
-    case "SET_ARTICLES":
+    case 'SET_ARTICLES':
       return {
         ...state,
         articles: action.payload,
-        isLoaded: true
+        isLoaded: true,
       };
 
-    case "SET_LOADED":
+    case 'SET_LOADED':
       return {
         ...state,
-        isLoaded: action.payload
+        isLoaded: action.payload,
       };
 
-    case "LOAD_ARTICLE":
+    case 'LOAD_ARTICLE_DATA':
       return {
         ...state,
-        currentPost: action.payload,
-        isLoaded: true
+        currentPost: action.payload.articleJSON,
+        comments: action.payload.commentsJSON,
+        isLoaded: true,
       };
 
-    case "SET_COMMENTS":
-      return {
-        ...state,
-        comments: action.payload,
-        isLoaded: true
-      };
-
-    case "OPEN_MODAL":
+    case 'OPEN_MODAL':
       return {
         ...state,
         visibleModal: true,
-        currentPost: action.payload
+        currentPost: action.payload,
       };
 
-    case "CLOSE_MODAL":
+    case 'CLOSE_MODAL':
       return {
         ...state,
         currentPost: {},
-        visibleModal: false
+        visibleModal: false,
       };
 
-    case "ADD_ARTICLE":
+    case 'ADD_ARTICLE':
       return {
         ...state,
         articles: [
           ...state.articles,
           {
-            ...action.payload
-          }
+            ...action.payload,
+          },
         ],
         visibleModal: false,
-        isLoaded: true
+        isLoaded: true,
       };
 
-    case "REMOVE_ARTICLE":
+    case 'REMOVE_ARTICLE':
       return {
         ...state,
-        articles: state.articles.filter((obj) => obj.id !== action.payload)
+        articles: state.articles.filter((obj) => obj.id !== action.payload),
       };
 
     default:

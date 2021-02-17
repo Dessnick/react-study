@@ -11,33 +11,29 @@ function FullPostPage({ match }) {
   const [state, dispatch] = React.useContext(StateContext);
 
   React.useEffect(() => {
-    dispatch({
-      type: 'SET_LOADED',
-      payload: false,
-    });
-    axios
-      .get(`https://5c3755177820ff0014d92711.mockapi.io/articles/${match.params.id}`)
-      .then(({ data }) => {
-        dispatch({
-          type: 'LOAD_ARTICLE',
-          payload: data,
-        });
+    const fetchData = async () => {
+      dispatch({
+        type: 'SET_LOADED',
+        payload: false,
       });
-  }, []);
 
-  React.useEffect(() => {
-    dispatch({
-      type: 'SET_LOADED',
-      payload: false,
-    });
-    axios
-      .get(`https://5c3755177820ff0014d92711.mockapi.io/articles/${match.params.id}/comments`)
-      .then(({ data }) => {
-        dispatch({
-          type: 'SET_COMMENTS',
-          payload: data,
-        });
+      const respArticle = await axios.get(
+        `https://5c3755177820ff0014d92711.mockapi.io/articles/${match.params.id}`,
+      );
+      const respComments = await axios.get(
+        `https://5c3755177820ff0014d92711.mockapi.io/articles/${match.params.id}/comments`,
+      );
+
+      const articleJSON = respArticle.data;
+      const commentsJSON = respComments.data;
+
+      dispatch({
+        type: 'LOAD_ARTICLE_DATA',
+        payload: { articleJSON, commentsJSON },
       });
+    };
+
+    fetchData();
   }, []);
 
   return (

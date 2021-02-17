@@ -11,10 +11,18 @@ export const StateContext = React.createContext();
 function App() {
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
+  const handleSearchChange = (data) => {
+    console.log(data, 'App');
+    dispatch({
+      type: 'SET_ARTICLES',
+      payload: data,
+    });
+  };
+
   return (
     <Container>
       <StateContext.Provider value={[state, dispatch]}>
-        <Navigation />
+        <Navigation onSearchChange={handleSearchChange} />
         <Route exact path="/">
           <HomePage />
         </Route>
