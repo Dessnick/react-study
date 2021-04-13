@@ -1,6 +1,6 @@
 import React from 'react';
 
-function UsersList({ name, email }) {
+function UserList({ name, email }) {
   return (
     <li className="users__item">
       <div className="users__item-name">{name}</div>
@@ -9,4 +9,4 @@ function UsersList({ name, email }) {
   );
 }
 
-export default UsersList;
+export default UserList;

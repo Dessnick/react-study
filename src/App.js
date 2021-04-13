@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import UsersList from './components/UsersList';
-import UsersListLoading from './components/UsersListLoading';
+import UserList from './components/UserList';
+import UserListLoading from './components/UserListLoading';
 
 function App() {
   const [users, setUsers] = React.useState([]);
@@ -12,7 +12,6 @@ function App() {
 
   const onChangePage = () => {
     setPage((page) => page + 1);
-    setLoading(true);
   };
 
   React.useEffect(() => {
@@ -25,6 +24,7 @@ function App() {
           setNoUsers(true);
         }
       });
+    setLoading(true);
   }, [page]);
 
   return (
@@ -45,17 +45,15 @@ function App() {
             return lowerName.includes(lowerInputValue) || lowerEmail.includes(lowerInputValue);
           })
           .map((obj) => (
-            <UsersList key={obj.id} name={obj.name} email={obj.email} />
+            <UserList key={obj.id} name={obj.name} email={obj.email} />
           ))}
         {loading &&
           Array(10)
             .fill(0)
-            .map((_, index) => <UsersListLoading key={index} />)}
+            .map((_, index) => <UserListLoading key={index} />)}
       </ul>
       {!noUsers && (
-        <button
-          onClick={loading || noUsers ? undefined : onChangePage}
-          className={`${loading ? 'disabled' : 'default'}`}>
+        <button onClick={onChangePage} className={`${loading || noUsers ? 'disabled' : 'default'}`}>
           {loading ? 'Wait...' : 'Next 10 users'}
         </button>
       )}

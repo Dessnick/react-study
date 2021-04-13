@@ -1,7 +1,7 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 
-const UsersListLoading = () => (
+const UserListLoading = () => (
   <li className="users__item">
     <ContentLoader
       speed={2}
@@ -16,4 +16,4 @@ const UsersListLoading = () => (
   </li>
 );
 
-export default UsersListLoading;
+export default UserListLoading;
