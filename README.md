@@ -1,70 +1,100 @@
-# Getting Started with Create React App
+# 📝 Задание №6 - Используем useReducer и контекст на реальном примере
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Ранее я [давал задание](https://github.com/Dessnick/react-study/tree/dz-04-news), где было необходимо разработать блог используя React Bootstrap с переходом по разным страницам.
 
-## Available Scripts
+Необходимо переписать логику хранения данных с помощью хука useReducer и useContext.
 
-In the project directory, you can run:
+Первые три чекпоинта необходимо выполнить, чтобы задание считалось выполненным.
 
-### `yarn start`
+В этом задании, вместо `/posts` в своих запросах к записям и комментариям, пиши теперь `/articles`.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+`https://5c3755177820ff0014d92711.mockapi.io/articles`
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+`https://5c3755177820ff0014d92711.mockapi.io/articles/:id/comments`
 
-### `yarn test`
+![Untitled (2)](https://user-images.githubusercontent.com/57808776/114497431-50ae9b80-9c4c-11eb-92ca-9ccd8ef93941.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 1. Хранить статьи и комментарии в Context'е
 
-### `yarn build`
+Вместо того, чтобы использовать useState, необходимо все статьи подгружаемые с сервера сохранять в контексте. Для того, чтобы понять суть этой задачи, необходимо посмотреть видео выше и разобраться с useContext и useReducer.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 2. Добавление статьи
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Исходя из видеоурока выше, можно понять, как реализовать возможность добавления статьей с помощью модального окна из React Bootstrap.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Подключи модальное окно, в котором будет: **title** (input), **image** (input), **text** (textarea). 
 
-### `yarn eject`
+Для этого используй компонент Form из этой же React Bootstrap.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+⚠️ **ВАЖНО**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+После нажатия "**Добавить**", необходимо отправлять запрос на сервер и дожидаться ответа о создании новой статьи.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Для того, чтобы статья создалась на сервере, тебе необходимо отправить **POST-запрос** по адресу [`https://5c3755177820ff0014d92711.mockapi.io/articles`](https://5c3755177820ff0014d92711.mockapi.io/articles).
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Для отправки POST-запроса, используй `axios.post(URL, data)`. 
 
-## Learn More
+`data` - тело запроса.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+В теле запроса необходимо передавать объект следующие вида:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```json
+{
+  "title": "...",
+  "image": "...",
+  "text": "...",
+}
+```
 
-### Code Splitting
+Вместо `...` передавай значения из инпутов.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**Полученный объект сразу же добавлять в стейт и отображать пользователю.**
 
-### Analyzing the Bundle Size
+### 3. Удаление статьи
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Если ты смог разобраться с этими двумя пунктами, то реализуй возможность удаления статьей как на сервере, так и стейте.
 
-### Making a Progressive Web App
+Для удаления статьи на сервере, отправляй запрос типа `DELETE`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+`axios.delete('https://5c3755177820ff0014d92711.mockapi.io/articles/:id')`
 
-### Advanced Configuration
+Обращаю внимание, что не нужно ожидать ответа от сервера, чтобы удалить статьи. Удаляешь статью в стейте и одновременно отправляешь запрос на сервер.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Не забудь уточнить у пользователя о решении удалить эту статью.
 
-### Deployment
+### 4. Редактирование статьи
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Попробуй реализовать не только добавление статьи, но и редактирование. 
 
-### `yarn build` fails to minify
+Для этого отправляй запрос `PUT` на адрес [`https://5c3755177820ff0014d92711.mockapi.io/articles/:id`](https://5c3755177820ff0014d92711.mockapi.io/articles/:id%60)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+При этом, отправляемый объект должен быть такого же вида, как и при создании статьи.
+
+### 5. Просмотр статьи без отправки запроса
+
+По идее, если ты выполнил 4 задание, то просмотр конкретной статьи и комментариев ты реализовал отправкой отдельного запроса в полной странице.
+
+Так как у тебя уже будет глобальное состояние с помощью контекста, ты должен найти по ID эту статью в массиве и отобразить сразу пользователю статью без ожидания ответа от сервера.
+
+Проще говоря, удали запрос на получение 1 статьи в **FullPostPage** и получай статью с помощью useContext
+
+### 6. Кеширование комментариев
+
+Комментарии мы должны получать отдельным запросом и выводить в полной записи. Но если мы выйдем из статьи и вернёмся обратно, то запрос отправляется снова на получение статей.
+
+Попробуй сохранять в отдельном объекте комментарии статьи и при следующем открытии конкретной статьи, проверять, что комментарии уже были ранее подгружены и получать их из контекста.
+
+Пример объекта в стейте:
+
+```json
+{
+  // ...
+  postComments: {
+    5: [...],
+    7: [...],
+  },
+  // ...
+}
+```
+
+Необходимо по `ID` статьи сохранять массив комментариев в стейте, чтобы из `postComments` вытаскивать по `ID` записи эти комменты.
