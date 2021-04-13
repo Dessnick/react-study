@@ -1,70 +1,84 @@
-# Getting Started with Create React App
+# 📝 Задание №3 - Создаём список задач на ReactJS
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Необходимо разработать список задач и понять, как производить манипуляции с массивом, данные которого будут выводиться в вашем приложении.
 
-## Available Scripts
+[## Демо](https://todo-app-mentoring.vercel.app/)
 
-In the project directory, you can run:
+## Чекпоинты
 
-### `yarn start`
+Не забывай разбивать при необходимости части своей вёрстки на отдельные компоненты. Think about it.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 1. Создание задачи
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Необходимо получать из инпута текст задачи и сохранить объект в массиве `tasks`. 
 
-### `yarn test`
+Учитывай то, что у каждой задачи должен быть свой уникальный `id`. 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+При каждом создании задачи, `id` должен увеличиваться на **+1** в новом объекте.
 
-### `yarn build`
+![Untitled (7)](https://user-images.githubusercontent.com/57808776/114498429-455c6f80-9c4e-11eb-8ed1-ecab559ed4c7.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 2. Удаление задачи
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Реализуй возможность удаления задачи. Ты уже знаешь, как выводить массив каких-то объектов и как устанавливать `onClick` на HTML-элементы.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+При клике на кнопку удаления, необходимо выводить окно подтверждения. Если юзер кликнет "**ОК**", то необходимо удалить из стейта конкретный объект с этой задачей.
 
-### `yarn eject`
+![Untitled (8)](https://user-images.githubusercontent.com/57808776/114498442-4b525080-9c4e-11eb-804a-81949b6c7eb3.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### 3. Редактирование задачи
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Если ты смог реализовать удаление, то тебе не составит труда реализовать редактирование задачи. Ты, как мега-крутой JS-разработчик знаешь о существовании в `window` метода, который умеет выводить окошко с полем ввода текста (не плагин).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+1. Определи `id` задачи. 
+2. Выводи это окно с полем ввода текста.
+3. Получи введённое значение.
+4. Найди задачу в массиве и замени старый текст на тот, что был указан в окне ввода.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### 4. Выбор цвета задачи
 
-## Learn More
+При создании задачи, нужно указывать цвет задачи. По умолчанию указываем цвет `grey`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**Пример:**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```json
+{
+  id: 1,
+  text: "Тестовая задача",
+  color: "grey"
+}
+```
 
-### Code Splitting
+При клике на любой цвет, установи в свойстве `className` доп. класс `active`, который визуально даст понять, какой цвет будет установлен при создании задачи.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Не меняй напрямую DOM-свойства, для этого есть `useState`.
 
-### Analyzing the Bundle Size
+Когда задача добавлена, сбрасывай цвет на серый.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+![Untitled (9)](https://user-images.githubusercontent.com/57808776/114498459-5311f500-9c4e-11eb-8f9d-7b6258580e19.png)
 
-### Making a Progressive Web App
+### 5. Задача выполнена
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+При создании объекта задачи, по умолчанию указывай `completed: false`.
 
-### Advanced Configuration
+Необходимо реализовать установку статуса задачи "**Выполнено**". Когда пользователь кликнет по галочке слева, в массиве конкретной задачи нужно установить свойство `completed: true`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Для этого необходимо определить `id` задачи.
 
-### Deployment
+![Untitled (10)](https://user-images.githubusercontent.com/57808776/114498470-586f3f80-9c4e-11eb-8923-89340373f5f8.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+У каждой галочки есть своё HTML-свойство `id`. Не забудь указать в этом свойстве `id` самой задачи, чтобы при клике на третью ил четвёртую галочку, не отмечалась первая.
 
-### `yarn build` fails to minify
+![Untitled (11)](https://user-images.githubusercontent.com/57808776/114498484-5c9b5d00-9c4e-11eb-9051-c041f13ff640.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 6. Фокус на инпут
+
+После каждого добавления задачи, устанавливай фокус снова на инпут, чтобы юзеру не пришлось кликать снова по полю, чтобы ввести текст.
+
+### 7. Сохранение задач в localStorage
+
+У нас нет сервера и соответственно БД, но твоя мама попросила записать список продуктов (не меня), которые тебе необходимо купить.
+
+Если ты добавишь эти продукты в свою тудушку, то после перезагрузки страницы, список стирается.
+
+Реализуй сохранение задач в `localStorage`. Если в локалсторе есть ранее добавленные задачи, то заранее устанавливай их в массив задач.
