@@ -1,70 +1,49 @@
-# Getting Started with Create React App
+Необходимо самому написать на React + Redux следующее приложение:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Демо:** [https://order-form-three.vercel.app/](https://order-form-three.vercel.app/)
 
-## Available Scripts
+Простая форма создания заказа (не суть важно чего). Необходимо сохранить значения из всех шагов в Redux и вывести в итоговом результате всю информацию.
 
-In the project directory, you can run:
+При нажатии на "**Оплатить**", необходимо отправлять запрос на сервер и сохранять заказ. Для этого, отправляй запрос на этот адрес [`https://5c3755177820ff0014d92711.mockapi.io/orders`](https://5c3755177820ff0014d92711.mockapi.io/orders)
 
-### `yarn start`
+**Главная задача** - сделать точно такой же функционал, как в этом демо. Вёрстка на твоё усмотрение.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Для того, чтобы использовать такую же стилизацию, как в этой демке, используй библиотеку Material UI - [https://material-ui.com/](https://material-ui.com/)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Красным помечено задание, которые необходимо выполнить, второе по желанию.
 
-### `yarn test`
+### Структура проекта:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![Untitled](https://user-images.githubusercontent.com/57808776/114497203-c9f9be80-9c4b-11eb-871c-8f8d9da1c3db.png)
 
-### `yarn build`
+### 1. Отправлять запрос через Redux
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Недостаточно просто создать внутри компонента функцию, которая будет будет отправлять запрос в Mockapi. Необходимо отправлять action в редакс, который будет асинхронно отправлять запрос на сервер на сохранение этого заказа.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Для отправки асинхронных экшенов, нужно использовать библиотеку `redux-thunk`.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Отправляемый JSON должен быть следующие вида:
 
-### `yarn eject`
+```json
+formData: {
+  firstName: '',
+  lastName: '',
+  city: '',
+  country: '',
+  phone: '',
+  deliveryMethod: '',
+  paymentMethod: '',
+}
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### 2. Разбить экшен и редюсер
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Для более грамотного структурирования проекта, создай папку `redux` и помести туда, как минимум, два файла: `actions.js` и `reducer.js`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+`reducer.js` - в этом файле хранить только сам редюсер и `inistalState`.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+`actions.js` - в нём будут храниться все экшены, которые потом можно переиспользовать. И вместо того, чтобы каждый раз помещать в `dispatch` новый объект, просто используй эти функции, который создают тебе экшн-объект.
 
-## Learn More
+Пример ниже:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+![Untitled (1)](https://user-images.githubusercontent.com/57808776/114497217-d251f980-9c4b-11eb-981c-af677f95fd92.png)
