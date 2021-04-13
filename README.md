@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+# 📝 Задание №2 - Первое приложение на React (список пользователей)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Задание №1 (простое)
 
-## Available Scripts
+Даётся следующий массив: [https://trycode.pw/c/37Z2Q.json](https://trycode.pw/c/37Z2Q.json)
 
-In the project directory, you can run:
+Скачай этот JSON-файл и помести в папку со своим тестовым проектом. Назови **data.json** и импортируй его внутри **App.js**
 
-### `yarn start`
+Отобрази в виде карточек все объекты, которые есть в этом массиве.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Для стилизации, советую использовать **Bootstrap**.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Задание №2 (среднее)
 
-### `yarn test`
+Попробуй после выполнения 1 задания, сделать поиск по заголовку и тексту.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Создай `<input/>` и делай фильтрацию этих карточек по значению этого инпута.
 
-### `yarn build`
+Учитывай то, что регистр в заголовке и в тексте может отличаться от вводимого значения в инпуте. Это значит, что если ввести **pie** с маленькой буквы в инпуте, при фильтрации, могут не найтись объекты с заголовком **Pie** с большой буквы.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Задание №3 (сложное)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![Untitled (12)](https://user-images.githubusercontent.com/57808776/114525096-03442580-9c70-11eb-8ee9-da9bcdea0c49.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Если ты разобрался с этими двумя заданиями, сделать третье задание для тебя не будет сложным.
 
-### `yarn eject`
+Вот вёрстка и стили из урока №2: [https://trycode.pw/c/87184](https://trycode.pw/c/87184)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Теперь вместо того, чтобы использовать JSON Placeholder, пользуйся этой ссылкой:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+[https://5c3755177820ff0014d92711.mockapi.io/users?page=1&limit=10](https://5c3755177820ff0014d92711.mockapi.io/users?page=1&limit=10)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Тут я сгенерировал для тебя 50 случайных пользователей.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Для того, чтобы получить следующих 10 пользователей с сервера, увеличивай  параметр **page** на +1 по ссылке выше
 
-## Learn More
+**Задача:**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Получи первых **10** пользователей и выводи их, примерно, как в списке выше.
+2. Вместо "**Add user**", напиши "**Next 10 users**" и при клике по этой кнопке, **запрашивай с сервера** **ещё 10 пользователей** и добавь в массив пользователей ещё 10 юзеров.
+3. Когда сервер вернёт пустой массив, скрой кнопку "**Next 10 users**" и при этом, не стирай список пользователей.
+4. Реализуй отображение статуса загрузки, когда идёт запрос данных. Например, выводи "**Loading...**", вместо пустой области.
+5. При клике по кнопке "Next 10 users", меняй текст у кнопки на "Wait..." и запрещай делать клик по кнопке.
