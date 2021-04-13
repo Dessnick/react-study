@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+# 📝 Задание №4 - Создаём простой блог
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Необходимо реализовать простую версию блога с возможностью перехода по нескольким страницам. В качестве примера для реализации, перейди по демо ниже.
 
-## Available Scripts
+Используй всё, что захочешь из ReactJS. Главная задача - сделать так, как сможешь. 
 
-In the project directory, you can run:
+### [Демо](https://news-mentor.vercel.app/)
 
-### `yarn start`
+### Страницы:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. `/` - главная страница.
+2. `/post/:id` - страница просмотра полной статьи и комментариев.
+3. `/about` - страница об авторе блога.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Откуда брать данные?
 
-### `yarn test`
+JSON со списком всех статей, комментариев и конкретной записи можно получить по следующим ссылкам:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. `[https://5c3755177820ff0014d92711.mockapi.io/posts](https://5c3755177820ff0014d92711.mockapi.io/posts)` - список всех статей.
+2. `[https://5c3755177820ff0014d92711.mockapi.io/posts/1](https://5c3755177820ff0014d92711.mockapi.io/posts/1)` - получить объект конкретной статьи по ID.
+3. `[https://5c3755177820ff0014d92711.mockapi.io/posts/1/comments](https://5c3755177820ff0014d92711.mockapi.io/posts/1/comments)` - получить список комментариев из записи с **ID = 1**.
 
-### `yarn build`
+### Что нужно использовать?
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Что захочешь 🤷🏻‍♂️ Могу лишь дать несколько советов:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Так как вы уже прошаренные React-разработчики и знакомы с такими штуками, как компоненты и библиотеки, то могу посоветовать вам отдельную реактовскую библиотеку компоненту [React Bootstrap](https://react-bootstrap.github.io/).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+С помощью этой библиотеки я смог без написания вёрстки, отобразить все карточки, комментарии и др. инфу. Советую заглянуть в раздел **Cards,** **Jumbotron и Navbar**, чтобы реализовать вёрстку, как у меня в демке.
 
-### `yarn eject`
+2. Для того, чтобы определить на какой ты находишься странице, используй `window.location.pathname` или любое другое решение, чтобы по адресу страницы отображать конкретную информацию.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+![Untitled (4)](https://user-images.githubusercontent.com/57808776/114497995-6cff0800-9c4d-11eb-9764-6f50bae0e6eb.png)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. Советую юзать `axios` вместо `fetch`, так как многие компании использую эту либу для работы с HTTP.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+4. Не забудь пользователю показывать статус загрузки текстом или как хочешь, чтобы он не видил просто белую страницу в самом начале загрузки сайта.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+5. Когда ты открыл страницу с конкретной статьёй, то ты должен определить `id` этой статьи, запросить с бэкенда данные и отобразить эти данные, как и комментарии по этому же `id`.
 
-## Learn More
+### Доп. задание
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+По своему желанию можешь реализовать поиск статей (я его не делал). Но учитывай, что поиск статей нужно делать через HTTP-запрос с помощью `axios`, а не просто фильтровать массив с помощью `.filter`. 
+То есть, когда ты вводишь в поле какой-то заголовок и нажимаешь "**Найти**", то отправляется запрос на бэкенд, который возвращает все найденные статьи. 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Пример запроса:
 
-### Code Splitting
+![Untitled (5)](https://user-images.githubusercontent.com/57808776/114498009-78eaca00-9c4d-11eb-8f53-d8b544c90f08.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Структура проекта
 
-### Analyzing the Bundle Size
+Предлагаю тебе ориентироваться на структуру, как показано на скриншоте ниже.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Главная точка, которая определяет, какую страницу-компонент отображать - `App.jsx`
 
-### Making a Progressive Web App
+Внутри этого компонента тебе нужно определять на какой ты странице и рендерить один из компонентов из папки `pages`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. `HomePage.jsx` - должен рендерить только список новостей и ничего другого.
+2. `FullPostPage.jsx` - рендерит полную статью и комментарии по этой статье.
+3. `AboutPage.jsx` - рендерит информацию о блоге.
 
-### Advanced Configuration
+Это правильный способ разбивать свой проект на отдельные части.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- `components` - хранят глобальные компоненты, которые будут использоваться в разных частях твоего сайта.
+- `pages` - определённая часть твоего сайта, которая рендерит множество разных компонентов, которые относятся к конкретному разделу. Например, в нашем ДЗ, в `FullPostPage.jsx`, может храниться только информация о статье и комментарии. Там не может храниться меню и ещё что-то. Меню является глобальным компонентом и должен рендериться вне зависимости от раздела.
+- `App.jsx` - является главной точкой всего твоего приложения. Оттуда ты уже отталкиваешься, что именно показывать пользователю.
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+![Untitled (6)](https://user-images.githubusercontent.com/57808776/114498018-7f794180-9c4d-11eb-9914-71961fa5f868.png)
